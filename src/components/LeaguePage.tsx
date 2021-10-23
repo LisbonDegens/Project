@@ -14,8 +14,11 @@ export default function LeaguePage() {
                 src={LEAGUES[game][league].imageUrl}
                 alt="hi"
             />
-            <p >
+            <h1 >
                 {LEAGUES[game][league].name}
+            </h1>
+            <p >
+                {LEAGUES[game][league].description}
             </p>
         </div>
     )
