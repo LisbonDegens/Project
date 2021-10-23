@@ -36,7 +36,7 @@ export default function LeagueGrid() {
 
     return (
         <div>
-            <h1>Leagues</h1>
+            <h1>{game} Pools</h1>
             <Grid container spacing={2}>
                 {Object.keys(LEAGUES[game]).map((key: string) =>
                     <Grid item xs={4} key={LEAGUES[game][key].name}>
