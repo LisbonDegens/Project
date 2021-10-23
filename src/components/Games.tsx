@@ -9,7 +9,7 @@ export interface Game { name: string, imageUrl: string };
 
 const GAMES: Game[] = [
     { name: "MarioKart", imageUrl: "https://play-lh.googleusercontent.com/6I6-3DLAdsVuK2mimkq5eVAyIwgMrNOF7d_8Ow7TEkAgR-vE83rcrL1OUUub9NOjWA" },
-    { name: "Decentraland", imageUrl: "https://media.thetab.com/blogs.dir/90/files/2021/05/screenshot-2021-05-04-at-113550.png" },
+    { name: "Decentraland", imageUrl: "https://s2.coinmarketcap.com/static/img/coins/200x200/1966.png" },
 ];
 
 export default function GameGrid() {

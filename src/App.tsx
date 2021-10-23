@@ -54,7 +54,7 @@ function App() {
           <Route path="/leagues/:game">
             <LeagueGrid />
           </Route>
-          <Route path="/league/:league">
+          <Route path="/league/:game/:league">
             <LeaguePage />
           </Route>
           <Route path="/">
