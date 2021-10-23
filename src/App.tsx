@@ -1,14 +1,10 @@
 import MetaMaskOnboarding from "@metamask/onboarding";
 import logo from './logo.svg';
 import React from "react";
-import Web3 from "web3";
-const abi = require("./erc20.json");
 
 const ONBOARD_TEXT = "Click here to install MetaMask!";
 const CONNECT_TEXT = "Connect";
 const CONNECTED_TEXT = "Connected";
-
-const SAND_TOKEN_ADDRESS = "0x3845badade8e6dff049820680d1f14bd3903a5d0";
 
 declare global {
   interface Window {
@@ -21,16 +17,6 @@ function App() {
   const [isDisabled, setDisabled] = React.useState(false);
   const [accounts, setAccounts] = React.useState([]);
   const onboarding = React.useRef<MetaMaskOnboarding>();
-
-  const [sandBalance, setSandBalance] = React.useState(-1);
-
-  let web3 = new Web3(
-    new Web3.providers.WebsocketProvider(
-      "wss://mainnet.infura.io/ws/v3/1002239177e9489a9ec78a14729a043d"
-    )
-  );
-
-  const tokenInst = new web3.eth.Contract(abi, SAND_TOKEN_ADDRESS);
 
   React.useEffect(() => {
     if (!onboarding.current) {
@@ -82,17 +68,6 @@ function App() {
     }
   };
 
-  React.useEffect(() => {
-    if (accounts.length > 0) {
-      tokenInst.methods
-        .balanceOf(accounts[0])
-        .call()
-        .then(function (bal: string) {
-          console.log(bal);
-          setSandBalance(parseFloat(bal));
-        });
-    }
-  }, [accounts, tokenInst.methods]);
 
   return (
     <div>
