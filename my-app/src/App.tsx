@@ -1,53 +1,5 @@
-/**
- * import React , { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-
-import './App.css';
-import Web3 from 'web3'
-
-declare let window: any;
-const web3 = new Web3(window.ethereum)
-
-
-function App() {
-  const [accounts, setAccounts]: [string[], any] = useState([]);
-  const [chainId, setChainId] = useState(1);
-
-  useEffect(() => {
-    const initialise = async () => {
-      setAccounts(await web3.eth.getAccounts());
-      setChainId(await web3.eth.getChainId());
-    }
-    initialise();
-  });
-
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Landing Page. accounts= {accounts};
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
-
-*/
 import MetaMaskOnboarding from "@metamask/onboarding";
+import logo from './logo.svg';
 import React from "react";
 import Web3 from "web3";
 const abi = require("./erc20.json");
@@ -144,6 +96,8 @@ function App() {
 
   return (
     <div>
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
       <h1>WTY</h1>
       <button disabled={isDisabled} onClick={onClick}>
         {buttonText}
@@ -153,10 +107,8 @@ function App() {
         <p>
           Your MetaMask address is <b>{accounts[0]}</b>
         </p>
-        <p>
-          Your SAND balance is <b>{sandBalance}</b>
-        </p>
       </div>
+      </header>
     </div>
   );
 }
