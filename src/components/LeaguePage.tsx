@@ -21,9 +21,6 @@ export default function LeaguePage() {
                 {LEAGUES[game][league].description}
             </p>
             <p >
-                Start time: {new Date(LEAGUES[game][league].startTime * 1000).toUTCString()}
-            </p>
-            <p >
                 End time: {new Date(LEAGUES[game][league].endTime * 1000).toUTCString()}
             </p>
 
