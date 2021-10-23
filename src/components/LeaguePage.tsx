@@ -19,6 +19,13 @@ async function deposit(leagueIndex: number, amount: number) {
     contract.methods.deposit(leagueIndex, amount).send({ from: "0xb19BC46C52A1352A071fe2389503B6FE1ABD50Ff" });
 }
 
+async function withdraw(leagueIndex: number) {
+    const web3 = new Web3(window.ethereum);
+    const contract = new web3.eth.Contract(WTY, WTY_ADDRESS);
+
+    contract.methods.withdraw(leagueIndex).send({ from: "0xb19BC46C52A1352A071fe2389503B6FE1ABD50Ff" });
+}
+
 export default function LeaguePage() {
     let { game, league }: { game: string; league: string } = useParams();
     var [amount, setAmount]: any = useState(0);
@@ -38,23 +45,24 @@ export default function LeaguePage() {
             }
             {
                 LEAGUES[game][league].endTime * 1000 >= Date.now() ? (
-                    <div>
-                        <Grid container direction='column'>
-                            <Grid item><TextField
+                    <Grid container direction='column'>
+                        <Grid item>
+                            <TextField
                                 label="Amount"
                                 onChange={(e: any) => setAmount(e.target.value)}
                             />
-                                <img height={50} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" />
-                            </Grid>
-                            <Grid item>
-                                <Button variant='contained' onClick={() => deposit(LEAGUES[game][league].leagueIndex, amount)}>Deposit</Button>
-                            </Grid>
+                            <img height={40} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" />
                         </Grid>
-                    </div>
+                        <Grid item>
+                            <Button variant='contained' onClick={() => deposit(LEAGUES[game][league].leagueIndex, amount)}>Deposit</Button>
+                        </Grid>
+                    </Grid>
                 ) : (
-                    <div>
-                        <Button variant='contained'>Withdraw</Button>
-                    </div>
+                    <Grid container direction='column'>
+                        <Grid item>
+                            <Button variant='contained' onClick={() => withdraw(LEAGUES[game][league].leagueIndex)}>Withdraw</Button>
+                        </Grid>
+                    </Grid>
                 )
             }
         </div >
