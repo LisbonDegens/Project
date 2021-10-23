@@ -3,21 +3,21 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Game } from './Games';
+import { League } from './Leagues';
 
-interface GameCardProps { game: Game };
+interface LeagueCardProps { league: League };
 
-export default function GameCard(props: GameCardProps) {
+export default function LeagueCard(props: LeagueCardProps) {
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia
                 component="img"
                 height="140"
-                image={props.game.imageUrl}
+                image={props.league.imageUrl}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {props.game.name}
+                    {props.league.name}
                 </Typography>
             </CardContent>
         </Card>

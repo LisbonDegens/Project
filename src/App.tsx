@@ -8,7 +8,9 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import GameGrid from './components/GameGrid';
+import GameGrid from './components/Games';
+import LeagueGrid from './components/Leagues';
+import LeaguePage from './components/LeaguePage';
 
 declare global {
   interface Window {
@@ -47,7 +49,13 @@ function App() {
         </nav>
         <Switch>
           <Route path="/games">
-            <GameGrid></GameGrid>
+            <GameGrid />
+          </Route>
+          <Route path="/leagues/:game">
+            <LeagueGrid />
+          </Route>
+          <Route path="/league/:league">
+            <LeaguePage />
           </Route>
           <Route path="/">
             <b>WELCOME TO WTY </b>
