@@ -69,7 +69,7 @@ export default function LeaguePage() {
             </p>
             }
 
-            <Grid container direction='column'>
+            <Grid container direction='column' style={{ borderStyle: 'dotted' }}>
                 <Grid item>
                     <TextField
                         label="Amount"
@@ -81,7 +81,10 @@ export default function LeaguePage() {
                     <Button variant='contained' onClick={() => deposit(LEAGUES[league].leagueIndex, amount)}>Deposit</Button>
                 </Grid>
             </Grid>
-            <Grid container direction='column'>
+            <Grid container direction='column' style={{ borderStyle: 'dotted', marginTop: 20 }}>
+                <Grid item>
+                    <p>You currently have FIXME DAI staked.</p>
+                </Grid>
                 <Grid item>
                     <Button variant='contained' onClick={() => withdraw(LEAGUES[league].leagueIndex)}>Withdraw</Button>
                 </Grid>
