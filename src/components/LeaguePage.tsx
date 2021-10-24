@@ -14,19 +14,7 @@ declare let window: any;
 const WTY_ADDRESS = "0xa0348368A2732650A15324f29e69D71EB7737bf5";
 const ATOKEN = "0x27F8D03b3a2196956ED754baDc28D73be8830A6e";
 
-async function deposit(leagueIndex: number, amount: number) {
-    const web3 = new Web3(window.ethereum);
-    const contract = new web3.eth.Contract(WTY, WTY_ADDRESS);
 
-    contract.methods.deposit(leagueIndex, amount).send({ from: "0xb19BC46C52A1352A071fe2389503B6FE1ABD50Ff" });
-}
-
-async function withdraw(leagueIndex: number) {
-    const web3 = new Web3(window.ethereum);
-    const contractWTY = new web3.eth.Contract(WTY, WTY_ADDRESS);
-
-    contractWTY.methods.withdraw(leagueIndex).send({ from: "0xb19BC46C52A1352A071fe2389503B6FE1ABD50Ff" });
-}
 
 async function calculatePrize(leagueIndex: number) {
     const web3 = new Web3(window.ethereum);
@@ -39,20 +27,50 @@ async function calculatePrize(leagueIndex: number) {
     return balance - totalStake;
 }
 
-async function setApproval() {
-    const web3 = new Web3(window.ethereum);
-    const contractERC20 = new web3.eth.Contract(ERC20, "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063");
-
-    await contractERC20.methods.approve(WTY_ADDRESS, "1000000000000000000000000000000000000").send({ from: "0xb19BC46C52A1352A071fe2389503B6FE1ABD50Ff" });
-}
 
 
 const DECIMALS = 18;
 
 export default function LeaguePage() {
     let { league }: { league: string } = useParams();
+    var [accounts, setAccounts] = React.useState([]);
+
     var [amount, setAmount] = useState(0);
     var [prize, setPrize] = useState(0);
+
+    React.useEffect(() => {
+        function handleNewAccounts(newAccounts: React.SetStateAction<never[]>) {
+            setAccounts(newAccounts);
+        }
+        window.ethereum
+            .request({ method: "eth_requestAccounts" })
+            .then(handleNewAccounts);
+        window.ethereum.on("accountsChanged", handleNewAccounts);
+        return () => {
+            window.ethereum.off("accountsChanged", handleNewAccounts);
+        };
+    }, []);
+
+    async function setApproval() {
+        const web3 = new Web3(window.ethereum);
+        const contractERC20 = new web3.eth.Contract(ERC20, "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063");
+
+        await contractERC20.methods.approve(WTY_ADDRESS, "1000000000000000000000000000000000000").send({ from: accounts[0] });
+    }
+
+    async function withdraw(leagueIndex: number) {
+        const web3 = new Web3(window.ethereum);
+        const contractWTY = new web3.eth.Contract(WTY, WTY_ADDRESS);
+
+        contractWTY.methods.withdraw(leagueIndex).send({ from: accounts[0] });
+    }
+
+    async function deposit(leagueIndex: number, amount: number) {
+        const web3 = new Web3(window.ethereum);
+        const contract = new web3.eth.Contract(WTY, WTY_ADDRESS);
+
+        contract.methods.deposit(leagueIndex, amount).send({ from: accounts[0] });
+    }
 
     setInterval(() => {
         async function doIt() {
