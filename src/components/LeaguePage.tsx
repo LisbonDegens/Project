@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Web3 from 'web3';
 import Grid from "@mui/material/Grid";
@@ -78,12 +78,15 @@ export default function LeaguePage() {
         contract.methods.deposit(leagueIndex, amount).send({ from: accounts[0] });
     }
 
-    setInterval(() => {
+    useEffect(() => {
         async function doIt() {
             setPrize(await calculatePrize(0));
         }
-        doIt();
-    }, 5000);
+        const interval = setInterval(() => {
+            doIt();
+        }, 100);
+        return () => clearInterval(interval);
+    }, []);
 
 
     return (
@@ -110,7 +113,7 @@ export default function LeaguePage() {
                     <p>You already deposited {userStake / (10 ** DECIMALS)}<img height={20} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" /></p>
                 </Grid>
                 <Grid container direction='row'>
-                    <Grid item direction='column' style={{ borderStyle: 'solid', borderWidth: 3, }} >
+                    <Grid item style={{ borderStyle: 'solid', borderWidth: 3, }} >
                         <Grid item>
                             <h3>Deposit</h3>
                         </Grid >
@@ -125,7 +128,7 @@ export default function LeaguePage() {
                             <Button variant='contained' onClick={() => deposit(LEAGUES[league].leagueIndex, amount)}>Deposit</Button>
                         </Grid>
                     </Grid>
-                    <Grid item direction='column' style={{ borderStyle: 'solid', borderWidth: 3 }} >
+                    <Grid item style={{ borderStyle: 'solid', borderWidth: 3 }} >
                         <Grid item>
                             <h3>Withdraw</h3>
                         </Grid >
