@@ -1,10 +1,11 @@
 .App {
-  text-align: center;
+  text-align: left;
+  
 }
 
 .App-logo {
   height: 40vmin;
-  pointer-events: none;
+  vertical-align: middle;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,18 +15,23 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #454e60;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(97, 85, 85);
 }
 
 .App-link {
   color: #61dafb;
+}
+
+nav {
+  background-color: #FFBA36;
+  min-height: 15vh;
 }
 
 @keyframes App-logo-spin {

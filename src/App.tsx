@@ -1,5 +1,5 @@
 import logo from './logo.png';
-import React from "react";
+import * as React from "react";
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import {
@@ -11,6 +11,7 @@ import {
 import GameGrid from './components/Games';
 import LeagueGrid from './components/Leagues';
 import LeaguePage from './components/LeaguePage';
+import './App.css';
 
 declare global {
   interface Window {
@@ -38,9 +39,9 @@ function App() {
     <Router>
       <div className="App">
         <nav>
-          <Grid container direction="row">
+          <Grid container spacing={2}>
             <Grid item>
-              <Link to="/"><img alt={'logo'} src={logo} height={100} /></Link>
+              <Link to="/"><img src={logo} height={100} /></Link>
             </Grid>
             <Grid item>
               <Link to="/games"><Button style={{ fontSize: 20 }}>Games</Button></Link>
