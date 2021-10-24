@@ -97,7 +97,8 @@ export default function LeaguePage() {
         <div>
             <img height="140" src={LEAGUES[league].imageUrl} alt="hi" />
             <h1>{LEAGUES[league].name}</h1>
-            <h2>Prize: {prize / (10 ** DECIMALS)}</h2>
+            <h2>Prize: {prize / (10 ** DECIMALS)} <img height={30} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" />
+            </h2>
             <p>{LEAGUES[league].description}</p>
             {LEAGUES[league].endTime * 1000 >= Date.now() ? (
                 <p style={{ color: 'green' }}>
@@ -122,7 +123,7 @@ export default function LeaguePage() {
             </Grid>
             <Grid container direction='column' style={{ borderStyle: 'dotted', marginTop: 20 }}>
                 <Grid item>
-                    <p>You currently have {userStake / (10 ** DECIMALS)} DAI staked.</p>
+                    <p>You currently have {userStake / (10 ** DECIMALS)}<img height={20} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" />                        staked.</p>
                 </Grid>
                 <Grid item>
                     <Button variant='contained' onClick={() => withdraw(LEAGUES[league].leagueIndex)}>Withdraw</Button>
