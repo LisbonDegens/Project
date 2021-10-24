@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import LeagueCard from "./LeagueCard";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export interface League {
     name: string;
