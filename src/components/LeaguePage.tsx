@@ -93,7 +93,7 @@ export default function LeaguePage() {
         <div>
             <img height="140" src={LEAGUES[league].imageUrl} alt="hi" />
             <h1>{LEAGUES[league].name}</h1>
-            <h2>Prize: {prize / (10 ** DECIMALS)} <img height={30} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" />
+            <h2>Prize: {prize / (10 ** DECIMALS)}   <img height={18} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" />
             </h2>
             <p>{LEAGUES[league].description}</p>
             {LEAGUES[league].endTime * 1000 >= Date.now() ? (
@@ -110,7 +110,7 @@ export default function LeaguePage() {
                     <h2>Your information</h2>
                 </Grid >
                 <Grid item>
-                    <p>You already deposited {userStake / (10 ** DECIMALS)}<img height={20} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" /></p>
+                    <p>You already deposited {userStake / (10 ** DECIMALS)}  <img height={18} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" /></p>
                 </Grid>
                 <Grid container direction='row'>
                     <Grid item style={{ borderStyle: 'solid', borderWidth: 3, }} >

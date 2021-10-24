@@ -29,9 +29,8 @@
   color: #61dafb;
 }
 
-nav {
-  background-color: #FFBA36;
-  min-height: 15vh;
+item{
+  vertical-align: bottom;
 }
 
 @keyframes App-logo-spin {
