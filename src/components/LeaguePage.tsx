@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import Web3 from 'web3'
+import Web3 from 'web3';
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -12,7 +12,7 @@ const ERC20 = require("../abis/ERC20.json");
 
 declare let window: any;
 
-const WTY_ADDRESS = "0x2A4588F1B477F17CCF4dCD71327aA17FaB24526D";
+export const WTY_ADDRESS = "0x2A4588F1B477F17CCF4dCD71327aA17FaB24526D";
 const ATOKEN_ADDRESS = "0x27F8D03b3a2196956ED754baDc28D73be8830A6e";
 
 async function calculatePrize(leagueIndex: number) {
@@ -64,13 +64,6 @@ export default function LeaguePage() {
             handleUserStake();
     }, [accounts, league]);
 
-    async function setApproval() {
-        const web3 = new Web3(window.ethereum);
-        const contractERC20 = new web3.eth.Contract(ERC20, "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063");
-
-        await contractERC20.methods.approve(WTY_ADDRESS, "1000000000000000000000000000000000000").send({ from: accounts[0] });
-    }
-
     async function withdraw(leagueIndex: number) {
         const web3 = new Web3(window.ethereum);
         const contractWTY = new web3.eth.Contract(WTY, WTY_ADDRESS);
@@ -109,27 +102,39 @@ export default function LeaguePage() {
             </p>
             }
 
-            <Grid container direction='column' style={{ borderStyle: 'dotted' }}>
+            <Grid container direction='column' style={{ backgroundColor: 'lightgrey' }}>
                 <Grid item>
-                    <TextField
-                        label="Amount"
-                        onChange={(e: any) => setAmount(new BigNumber(e.target.value * (10 ** DECIMALS)))}
-                    />
-                    <img height={40} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" />
+                    <h2>Your information</h2>
+                </Grid >
+                <Grid item>
+                    <p>You already deposited {userStake / (10 ** DECIMALS)}<img height={20} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" /></p>
                 </Grid>
-                <Grid item>
-                    <Button variant='contained' onClick={() => deposit(LEAGUES[league].leagueIndex, amount)}>Deposit</Button>
+                <Grid container direction='row'>
+                    <Grid item direction='column' style={{ borderStyle: 'solid', borderWidth: 3, }} >
+                        <Grid item>
+                            <h3>Deposit</h3>
+                        </Grid >
+                        <Grid item>
+                            <TextField
+                                label="Amount"
+                                onChange={(e: any) => setAmount(new BigNumber(e.target.value * (10 ** DECIMALS)))}
+                            />
+                            <img height={40} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" />
+                        </Grid>
+                        <Grid item>
+                            <Button variant='contained' onClick={() => deposit(LEAGUES[league].leagueIndex, amount)}>Deposit</Button>
+                        </Grid>
+                    </Grid>
+                    <Grid item direction='column' style={{ borderStyle: 'solid', borderWidth: 3 }} >
+                        <Grid item>
+                            <h3>Withdraw</h3>
+                        </Grid >
+                        <Grid item>
+                            <Button variant='contained' onClick={() => withdraw(LEAGUES[league].leagueIndex)}>Withdraw all</Button>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
-            <Grid container direction='column' style={{ borderStyle: 'dotted', marginTop: 20 }}>
-                <Grid item>
-                    <p>You currently have {userStake / (10 ** DECIMALS)}<img height={20} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" />                        staked.</p>
-                </Grid>
-                <Grid item>
-                    <Button variant='contained' onClick={() => withdraw(LEAGUES[league].leagueIndex)}>Withdraw</Button>
-                </Grid>
-            </Grid>
-            <Button variant='contained' onClick={() => setApproval()}>Set approval</Button>
 
         </div >
     );

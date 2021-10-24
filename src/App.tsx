@@ -11,6 +11,10 @@ import {
 import LeagueGrid from './components/Leagues';
 import LeaguePage from './components/LeaguePage';
 import './App.css';
+import Web3 from 'web3';
+import { WTY_ADDRESS } from './components/LeaguePage';
+
+const ERC20 = require("./abis/ERC20.json");
 
 declare global {
   interface Window {
@@ -18,8 +22,16 @@ declare global {
   }
 }
 
+
 function App() {
   const [accounts, setAccounts] = React.useState([]);
+
+  async function setApproval() {
+    const web3 = new Web3(window.ethereum);
+    const contractERC20 = new web3.eth.Contract(ERC20, "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063");
+
+    await contractERC20.methods.approve(WTY_ADDRESS, "1000000000000000000000000000000000000").send({ from: accounts[0] });
+  }
 
   React.useEffect(() => {
     function handleNewAccounts(newAccounts: React.SetStateAction<never[]>) {
@@ -56,7 +68,7 @@ function App() {
           </Route>
           <Route path="/">
             <b>WELCOME TO WTY </b>
-            <p>your account {accounts[0]}</p>
+            <Button variant='contained' onClick={() => setApproval()}>Set DAI approval</Button>
           </Route>
         </Switch>
       </div >
