@@ -1,4 +1,4 @@
-import logo from './logo.png';
+import longlogo from './longlogo.png';
 import * as React from "react";
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -50,12 +50,17 @@ function App() {
     <Router>
       <div className="App">
         <nav>
-          <Grid container spacing={2}>
+          <Grid container spacing={2}
+            alignItems="center"
+          >
             <Grid item>
-              <Link to="/"><img src={logo} alt={'logo'} height={100} /></Link>
+              <Link to="/"><img src={longlogo} alt={'logo'} height={100} /></Link>
             </Grid>
             <Grid item>
-              <Link to="/leagues"><Button style={{ fontSize: 20 }}>Leagues</Button></Link>
+              <Link to="/leagues" style={{ textDecoration: 'none' }}><Button style={{ fontSize: 20 }}>Pools</Button></Link>
+            </Grid>
+            <Grid item>
+              <Link to="/account" style={{ textDecoration: 'none' }}><Button style={{ fontSize: 20 }}>Account</Button></Link>
             </Grid>
           </Grid>
         </nav>
@@ -66,9 +71,18 @@ function App() {
           <Route path="/league/:league">
             <LeaguePage />
           </Route>
+          <Route path="/account">
+            <Grid container direction="column" spacing={2} style={{ padding: 30 }}>
+              <Grid item>
+                <b>My account is {accounts[0]}</b>
+              </Grid >
+              <Grid item>
+                <Button variant='contained' onClick={() => setApproval()}>Set DAI approval</Button>
+              </Grid >
+            </Grid >
+          </Route>
           <Route path="/">
-            <b>WELCOME TO WTY </b>
-            <Button variant='contained' onClick={() => setApproval()}>Set DAI approval</Button>
+            <div style={{ padding: 30 }}><b >WELCOME TO WTY </b></div>
           </Route>
         </Switch>
       </div >

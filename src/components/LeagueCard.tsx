@@ -17,7 +17,10 @@ export default function LeagueCard(props: LeagueCardProps) {
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {props.league.name}
+                    {props.league.actualName}
+                </Typography>
+                <Typography gutterBottom variant="h6" component="div">
+                    {Math.round(props.league.prize * 100) / 100} {props.league.currencySymbol} prize
                 </Typography>
             </CardContent>
         </Card>

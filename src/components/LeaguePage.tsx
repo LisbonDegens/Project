@@ -12,7 +12,7 @@ const ERC20 = require("../abis/ERC20.json");
 
 declare let window: any;
 
-export const WTY_ADDRESS = "0x2A4588F1B477F17CCF4dCD71327aA17FaB24526D";
+export const WTY_ADDRESS = "0x526CB44848b6663133ff5Dd8e6E1d4D9617000f7";
 const ATOKEN_ADDRESS = "0x27F8D03b3a2196956ED754baDc28D73be8830A6e";
 
 async function calculatePrize(leagueIndex: number) {
@@ -33,12 +33,21 @@ async function getUserStake(leagueIndex: number, user: string) {
     return await contractWTY.methods.getUserStake(leagueIndex, user).call();
 }
 
+async function getWinner(leagueIndex: number) {
+    const web3 = new Web3(window.ethereum);
+    const contractWTY = new web3.eth.Contract(WTY, WTY_ADDRESS);
+
+    return await contractWTY.methods.getWinner(leagueIndex).call();
+}
+
+
 const DECIMALS = 18;
 
 export default function LeaguePage() {
     let { league }: { league: string } = useParams();
     var [accounts, setAccounts] = React.useState([]);
     var [userStake, setUserStake] = useState(0);
+    var [winner, setWinner] = useState("");
 
     var [amount, setAmount] = useState(new BigNumber(0));
     var [prize, setPrize] = useState(0);
@@ -64,6 +73,13 @@ export default function LeaguePage() {
             handleUserStake();
     }, [accounts, league]);
 
+    React.useEffect(() => {
+        async function handleWinner() {
+            setWinner(await getWinner(LEAGUES[league].leagueIndex));
+        }
+        handleWinner();
+    }, [league]);
+
     async function withdraw(leagueIndex: number) {
         const web3 = new Web3(window.ethereum);
         const contractWTY = new web3.eth.Contract(WTY, WTY_ADDRESS);
@@ -84,33 +100,53 @@ export default function LeaguePage() {
         }
         const interval = setInterval(() => {
             doIt();
-        }, 100);
+        }, 1000);
         return () => clearInterval(interval);
     }, []);
 
 
     return (
         <div>
-            <img height="140" src={LEAGUES[league].imageUrl} alt="hi" />
-            <h1>{LEAGUES[league].name}</h1>
-            <h2>Prize: {prize / (10 ** DECIMALS)} <img height={30} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" />
-            </h2>
-            <p>{LEAGUES[league].description}</p>
-            {LEAGUES[league].endTime * 1000 >= Date.now() ? (
-                <p style={{ color: 'green' }}>
-                    End date: {new Date(LEAGUES[league].endTime * 1000).toUTCString()}
-                </p>
-            ) : <p style={{ color: 'red' }}>
-                End date: {new Date(LEAGUES[league].endTime * 1000).toUTCString()} (finished)
-            </p>
-            }
+            <Grid container
+                direction='column'
+                alignItems="center"
+                justifyContent="center">
 
-            <Grid container direction='column' style={{ backgroundColor: 'lightgrey' }}>
+                <img height="300" src={LEAGUES[league].imageUrl} alt="hi" />
+                <h1>{LEAGUES[league].actualName}</h1>
+                <Grid container direction='row'
+                    alignItems="center"
+                    justifyContent="center">
+                    <Grid item style={{
+                        borderStyle: 'solid',
+                        borderRadius: 10,
+                        borderWidth: 2,
+                        textAlign: 'center',
+                        width: 250
+                    }}>
+                        <h2>{Math.round((prize / (10 ** DECIMALS)) * 1000000) / 1000000} {LEAGUES[league].currencySymbol}</h2>
+                        <h4>Prize</h4>
+                    </Grid >
+                    <Grid item style={{
+                        borderStyle: 'solid',
+                        borderRadius: 10,
+                        borderWidth: 2,
+                        textAlign: 'center',
+                        width: 250
+                    }}>
+                        <h2>TBA</h2>
+                        <h4>Winner</h4>
+                    </Grid >
+                </Grid>
+                <p style={{ fontSize: 20 }}>{LEAGUES[league].description}</p>
+
+            </Grid>
+            <Grid container direction='column' style={{ backgroundColor: 'lightgrey', padding: 30 }}>
                 <Grid item>
                     <h2>Your information</h2>
                 </Grid >
                 <Grid item>
-                    <p>You already deposited {userStake / (10 ** DECIMALS)}<img height={20} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" /></p>
+                    <p >You already deposited {userStake / (10 ** DECIMALS)} {LEAGUES[league].currencySymbol}</p>
                 </Grid>
                 <Grid container direction='row'>
                     <Grid item style={{ borderStyle: 'solid', borderWidth: 3, }} >
@@ -122,16 +158,15 @@ export default function LeaguePage() {
                                 label="Amount"
                                 onChange={(e: any) => setAmount(new BigNumber(e.target.value * (10 ** DECIMALS)))}
                             />
-                            <img height={40} alt={'DAI'} src="https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png" />
                         </Grid>
                         <Grid item>
                             <Button variant='contained' onClick={() => deposit(LEAGUES[league].leagueIndex, amount)}>Deposit</Button>
                         </Grid>
                     </Grid>
-                    <Grid item style={{ borderStyle: 'solid', borderWidth: 3 }} >
+                    <Grid item style={{ borderStyle: 'solid', borderWidth: 3, borderLeft: 0 }} >
                         <Grid item>
                             <h3>Withdraw</h3>
-                        </Grid >
+                        </Grid>
                         <Grid item>
                             <Button variant='contained' onClick={() => withdraw(LEAGUES[league].leagueIndex)}>Withdraw all</Button>
                         </Grid>
