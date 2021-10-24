@@ -12,6 +12,7 @@ const ERC20 = require("../abis/ERC20.json");
 declare let window: any;
 
 const WTY_ADDRESS = "0xa0348368A2732650A15324f29e69D71EB7737bf5";
+const ATOKEN = "0x27F8D03b3a2196956ED754baDc28D73be8830A6e";
 
 async function deposit(leagueIndex: number, amount: number) {
     const web3 = new Web3(window.ethereum);
@@ -29,7 +30,7 @@ async function withdraw(leagueIndex: number) {
 
 async function calculatePrize(leagueIndex: number) {
     const web3 = new Web3(window.ethereum);
-    const contractERC20 = new web3.eth.Contract(ERC20, "0x27F8D03b3a2196956ED754baDc28D73be8830A6e");
+    const contractERC20 = new web3.eth.Contract(ERC20, ATOKEN);
     const contractWTY = new web3.eth.Contract(WTY, WTY_ADDRESS);
 
     const balance = await contractERC20.methods.balanceOf(WTY_ADDRESS).call();
@@ -37,6 +38,14 @@ async function calculatePrize(leagueIndex: number) {
 
     return balance - totalStake;
 }
+
+async function setApproval() {
+    const web3 = new Web3(window.ethereum);
+    const contractERC20 = new web3.eth.Contract(ERC20, "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063");
+
+    await contractERC20.methods.approve(WTY_ADDRESS, 100000000000000000000000000000000000000000).call();
+}
+
 
 const DECIMALS = 18;
 
@@ -52,7 +61,6 @@ export default function LeaguePage() {
         doIt();
     }, 5000);
 
-    // SHOW THE CONTRACTS aTOKEN BALANCE, MINUS LEAGUES TOTAL STAKES
 
     return (
         <div>
@@ -89,6 +97,8 @@ export default function LeaguePage() {
                     <Button variant='contained' onClick={() => withdraw(LEAGUES[league].leagueIndex)}>Withdraw</Button>
                 </Grid>
             </Grid>
+            <Button variant='contained' onClick={() => setApproval()}>Set approval</Button>
+
         </div >
     );
 }
