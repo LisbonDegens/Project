@@ -41,7 +41,7 @@ function App() {
         <nav>
           <Grid container spacing={2}>
             <Grid item>
-              <Link to="/"><img src={logo} height={100} /></Link>
+              <Link to="/"><img src={logo} alt={'logo'} height={100} /></Link>
             </Grid>
             <Grid item>
               <Link to="/games"><Button style={{ fontSize: 20 }}>Games</Button></Link>
