@@ -85,7 +85,7 @@ function App() {
           <Route path="/">
             <div style={{ padding: 30 }}>
               <h1 >WTY Overview</h1>
-              <p>Winner Takes Yield, or WTY for short, is a loss free lottery for gaming.</p>
+              <p>Winner Takes Yield (WTY for short) is a loss free lottery for gaming.</p>
               <h1 >Team</h1>
               <img height="400" src={team} alt="hi" />
             </div>
