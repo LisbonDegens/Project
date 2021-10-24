@@ -1744,13 +1744,6 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@metamask/onboarding@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@metamask/onboarding/-/onboarding-1.0.1.tgz"
-  integrity sha512-FqHhAsCI+Vacx2qa5mAFcWNSrTcVGMNjzxVgaX8ECSny/BJ9/vgXP9V7WF/8vb9DltPeQkxr+Fnfmm6GHfmdTQ==
-  dependencies:
-    bowser "^2.9.0"
-
 "@mui/core@5.0.0-alpha.51":
   version "5.0.0-alpha.51"
   resolved "https://registry.yarnpkg.com/@mui/core/-/core-5.0.0-alpha.51.tgz#3c5f715a0ee5ab123e0987047b8e4651964ecc54"
@@ -3314,6 +3307,16 @@ bignumber.js@^9.0.0:
   resolved "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.0.1.tgz"
   integrity sha512-IdZR9mh6ahOBv/hYGiXyVuyCetmGJhtYkqLBpTStdhEGjegpPlUawydyaF3pbIOFynJTpllEs+NP+CS9jKFLjA==
 
+bignumber.js@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.1.tgz#8d7ba124c882bfd8e43260c67475518d0689e4e5"
+  integrity sha512-IdZR9mh6ahOBv/hYGiXyVuyCetmGJhtYkqLBpTStdhEGjegpPlUawydyaF3pbIOFynJTpllEs+NP+CS9jKFLjA==
+
+bignumber@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/bignumber/-/bignumber-1.1.0.tgz#e6ab0a743da5f3ea018e5c17597d121f7868c159"
+  integrity sha1-5qsKdD2l8+oBjlwXWX0SH3howVk=
+
 binary-extensions@^1.0.0:
   version "1.13.1"
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-1.13.1.tgz"
@@ -3389,7 +3392,7 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
-bowser@^2.5.4, bowser@^2.9.0:
+bowser@^2.5.4:
   version "2.11.0"
   resolved "https://registry.npmjs.org/bowser/-/bowser-2.11.0.tgz"
   integrity sha512-AlcaJBi/pqqJBIQ8U9Mcpc9i8Aqxn88Skv5d+xBX006BY5u8N3mGLHa5Lgppa7L/HfwgwLgZ6NYs+Ag6uUmJRA==
@@ -8464,11 +8467,6 @@ ms@2.1.2, ms@^2.1.1:
   version "2.1.2"
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
-
-mui@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/mui/-/mui-0.0.1.tgz#469a71f0932969526271ec939dc5959806590762"
-  integrity sha1-Rppx8JMpaVJiceyTncWVmAZZB2I=
 
 multibase@^0.7.0:
   version "0.7.0"
