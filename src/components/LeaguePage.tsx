@@ -38,6 +38,8 @@ async function calculatePrize(leagueIndex: number) {
     return balance - totalStake;
 }
 
+const DECIMALS = 18;
+
 export default function LeaguePage() {
     let { league }: { league: string } = useParams();
     var [amount, setAmount] = useState(0);
@@ -56,7 +58,7 @@ export default function LeaguePage() {
         <div>
             <img height="140" src={LEAGUES[league].imageUrl} alt="hi" />
             <h1>{LEAGUES[league].name}</h1>
-            <h2>Prize: {prize}</h2>
+            <h2>Prize: {prize / (10 ** DECIMALS)}</h2>
             <p>{LEAGUES[league].description}</p>
             {LEAGUES[league].endTime * 1000 >= Date.now() ? (
                 <p style={{ color: 'green' }}>
