@@ -8,7 +8,6 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import GameGrid from './components/Games';
 import LeagueGrid from './components/Leagues';
 import LeaguePage from './components/LeaguePage';
 import './App.css';
@@ -44,18 +43,15 @@ function App() {
               <Link to="/"><img src={logo} alt={'logo'} height={100} /></Link>
             </Grid>
             <Grid item>
-              <Link to="/games"><Button style={{ fontSize: 20 }}>Games</Button></Link>
+              <Link to="/leagues"><Button style={{ fontSize: 20 }}>Leagues</Button></Link>
             </Grid>
           </Grid>
         </nav>
         <Switch>
-          <Route path="/games">
-            <GameGrid />
-          </Route>
-          <Route path="/leagues/:game">
+          <Route path="/leagues">
             <LeagueGrid />
           </Route>
-          <Route path="/league/:game/:league">
+          <Route path="/league/:league">
             <LeaguePage />
           </Route>
           <Route path="/">
