@@ -13,6 +13,7 @@ import LeaguePage from './components/LeaguePage';
 import './App.css';
 import Web3 from 'web3';
 import { WTY_ADDRESS } from './components/LeaguePage';
+import team from './team.png';
 
 const ERC20 = require("./abis/ERC20.json");
 
@@ -57,10 +58,10 @@ function App() {
               <Link to="/"><img src={longlogo} alt={'logo'} height={100} /></Link>
             </Grid>
             <Grid item>
-              <Link to="/leagues" style={{ textDecoration: 'none' }}><Button style={{ fontSize: 20 }}>Pools</Button></Link>
+              <Link to="/leagues" style={{ textDecoration: 'none' }}><Button style={{ fontSize: 20, color: 'white' }}><b>Pools</b></Button></Link>
             </Grid>
             <Grid item>
-              <Link to="/account" style={{ textDecoration: 'none' }}><Button style={{ fontSize: 20 }}>Account</Button></Link>
+              <Link to="/account" style={{ textDecoration: 'none' }}><Button style={{ fontSize: 20, color: 'white' }}><b>Account</b></Button></Link>
             </Grid>
           </Grid>
         </nav>
@@ -82,7 +83,12 @@ function App() {
             </Grid >
           </Route>
           <Route path="/">
-            <div style={{ padding: 30 }}><b >WELCOME TO WTY </b></div>
+            <div style={{ padding: 30 }}>
+              <h1 >WTY Overview</h1>
+              <p>Winner Takes Yield, or WTY for short, is a loss free lottery for gaming. blah blah blah.</p>
+              <h1 >Team</h1>
+              <img height="400" src={team} alt="hi" />
+            </div>
           </Route>
         </Switch>
       </div >

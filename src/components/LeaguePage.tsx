@@ -12,7 +12,7 @@ const ERC20 = require("../abis/ERC20.json");
 
 declare let window: any;
 
-export const WTY_ADDRESS = "0x526CB44848b6663133ff5Dd8e6E1d4D9617000f7";
+export const WTY_ADDRESS = "0x089130147dAbD8757840E76dBd85026231801586";
 const ATOKEN_ADDRESS = "0x27F8D03b3a2196956ED754baDc28D73be8830A6e";
 
 async function calculatePrize(leagueIndex: number) {
@@ -47,7 +47,7 @@ export default function LeaguePage() {
     let { league }: { league: string } = useParams();
     var [accounts, setAccounts] = React.useState([]);
     var [userStake, setUserStake] = useState(0);
-    var [winner, setWinner] = useState("");
+    var [winner, setWinner] = useState("0x0000000000000000000000000000000000000000");
 
     var [amount, setAmount] = useState(new BigNumber(0));
     var [prize, setPrize] = useState(0);
@@ -94,6 +94,13 @@ export default function LeaguePage() {
         contract.methods.deposit(leagueIndex, amount).send({ from: accounts[0] });
     }
 
+    async function redeemAward(leagueIndex: number) {
+        const web3 = new Web3(window.ethereum);
+        const contractWTY = new web3.eth.Contract(WTY, WTY_ADDRESS);
+
+        contractWTY.methods.redeemAward(leagueIndex).send({ from: accounts[0] });
+    }
+
     useEffect(() => {
         async function doIt() {
             setPrize(await calculatePrize(0));
@@ -114,42 +121,52 @@ export default function LeaguePage() {
 
                 <img height="300" src={LEAGUES[league].imageUrl} alt="hi" />
                 <h1>{LEAGUES[league].actualName}</h1>
-                <Grid container direction='row'
+                <Grid container direction='column'
                     alignItems="center"
-                    justifyContent="center">
-                    <Grid item style={{
-                        borderStyle: 'solid',
-                        borderRadius: 10,
-                        borderWidth: 2,
-                        textAlign: 'center',
-                        width: 250
-                    }}>
-                        <h2>{Math.round((prize / (10 ** DECIMALS)) * 1000000) / 1000000} {LEAGUES[league].currencySymbol}</h2>
-                        <h4>Prize</h4>
-                    </Grid >
-                    <Grid item style={{
-                        borderStyle: 'solid',
-                        borderRadius: 10,
-                        borderWidth: 2,
-                        textAlign: 'center',
-                        width: 250
-                    }}>
-                        <h2>TBA</h2>
-                        <h4>Winner</h4>
-                    </Grid >
+                >
+                    <Grid container direction='row'
+                        alignItems="center"
+                        justifyContent="center">
+                        <Grid item style={{
+                            borderStyle: 'solid',
+                            borderRadius: 10,
+                            borderWidth: 2,
+                            textAlign: 'center',
+                            width: 250
+                        }}>
+                            <h2>{Math.round((prize / (10 ** DECIMALS)) * 1000000) / 1000000} {LEAGUES[league].currencySymbol}</h2>
+                            <h4>Prize</h4>
+                        </Grid >
+                        <Grid item style={{
+                            borderStyle: 'solid',
+                            borderRadius: 10,
+                            borderWidth: 2,
+                            textAlign: 'center',
+                            width: 250
+                        }}>
+                            <h2>{winner === "0x0000000000000000000000000000000000000000" ? "TBA" : `${winner.slice(0, 10)}...`}</h2>
+                            <h4>Winner</h4>
+                        </Grid >
+                    </Grid>
+                    <Grid item>
+                        {winner === "0x0000000000000000000000000000000000000000" ?
+                            <Button disabled variant='contained' style={{ margin: 10 }} >Redeem prize</Button> :
+                            <Button variant='contained' style={{ margin: 10 }} onClick={() => redeemAward(LEAGUES[league].leagueIndex)}>Redeem prize</Button>
+                        }
+                    </Grid>
                 </Grid>
                 <p style={{ fontSize: 20 }}>{LEAGUES[league].description}</p>
 
             </Grid>
             <Grid container direction='column' style={{ backgroundColor: 'lightgrey', padding: 30 }}>
                 <Grid item>
-                    <h2>Your information</h2>
+                    <h2>Contribute to the pool</h2>
                 </Grid >
                 <Grid item>
                     <p >You already deposited {userStake / (10 ** DECIMALS)} {LEAGUES[league].currencySymbol}</p>
                 </Grid>
                 <Grid container direction='row'>
-                    <Grid item style={{ borderStyle: 'solid', borderWidth: 3, }} >
+                    <Grid item style={{ borderStyle: 'solid', borderWidth: 3, padding: 10 }} >
                         <Grid item>
                             <h3>Deposit</h3>
                         </Grid >
@@ -163,7 +180,7 @@ export default function LeaguePage() {
                             <Button variant='contained' onClick={() => deposit(LEAGUES[league].leagueIndex, amount)}>Deposit</Button>
                         </Grid>
                     </Grid>
-                    <Grid item style={{ borderStyle: 'solid', borderWidth: 3, borderLeft: 0 }} >
+                    <Grid item style={{ borderStyle: 'solid', borderWidth: 3, borderLeft: 0, padding: 10 }} >
                         <Grid item>
                             <h3>Withdraw</h3>
                         </Grid>
