@@ -43,7 +43,7 @@ async function setApproval() {
     const web3 = new Web3(window.ethereum);
     const contractERC20 = new web3.eth.Contract(ERC20, "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063");
 
-    await contractERC20.methods.approve(WTY_ADDRESS, 100000000000000000000000000000000000000000).call();
+    await contractERC20.methods.approve(WTY_ADDRESS, "1000000000000000000000000000000000000").send({ from: "0xb19BC46C52A1352A071fe2389503B6FE1ABD50Ff" });
 }
 
 
